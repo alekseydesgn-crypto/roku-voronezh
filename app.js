@@ -83,3 +83,8 @@ setupScrollMotion();motionReduced.addEventListener('change',setupScrollMotion);
 const loungeSection=document.querySelector('.lounge');let driftPending=false;
 function updateScrollDrift(){driftPending=false;if(motionReduced.matches)return;const r=loungeSection.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){const progress=(innerHeight-r.top)/(innerHeight+r.height);loungeSection.style.setProperty('--scroll-drift',`${(progress-.5)*65}px`)}}
 window.addEventListener('scroll',()=>{if(!driftPending){driftPending=true;requestAnimationFrame(updateScrollDrift)}},{passive:true});updateScrollDrift();
+
+// Repeat heading entrances while visible; pause work outside the viewport.
+const loopHeadings=document.querySelectorAll('main h1,main h2');
+const headingObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>target.classList.toggle('heading-loop-active',isIntersecting)),{threshold:.1});
+loopHeadings.forEach(el=>{el.classList.add('heading-loop');headingObserver.observe(el)});
