@@ -128,3 +128,18 @@ h1,h2,h3{font-family:"TT Octosquares Expanded",Xolonium,sans-serif;font-weight:9
 .lounge>img{z-index:0}
 .lounge-shade{z-index:1;pointer-events:none}
 .lounge-content{z-index:2;opacity:1}
+
+/* Typography enters on its own beat, after the section/card surface. */
+@media(prefers-reduced-motion:no-preference){
+ .text-stage .staged-title{opacity:0;translate:0 38px;transition:opacity .8s ease .85s,translate 1.1s cubic-bezier(.16,1,.3,1) .85s}
+ .text-stage .staged-title[data-entrance=left]{translate:-38px 0}
+ .text-stage .staged-title[data-entrance=right]{translate:38px 0}
+ .text-stage .staged-copy{opacity:0;translate:0 20px;transition:opacity .8s ease 1.1s,translate .9s cubic-bezier(.16,1,.3,1) 1.1s}
+ .text-stage.text-stage-ready .staged-title,.text-stage.text-stage-ready .staged-copy{opacity:1;translate:0 0}
+ .kitchen-copy.text-stage .staged-title{transition-delay:.95s}
+}
+@media(max-width:760px) and (prefers-reduced-motion:no-preference){
+ .text-stage .staged-title[data-entrance=left]{translate:-18px 0}
+ .text-stage .staged-title[data-entrance=right]{translate:18px 0}
+ .text-stage.text-stage-ready .staged-title{translate:0 0}
+}

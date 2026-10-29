@@ -71,7 +71,7 @@ motionReduced.addEventListener('change',resetAllMotion);motionPointer.addEventLi
 bindShortWords(document.body);
 
 // Reveal content as it enters the viewport; keep it readable without JS/motion.
-const revealNodes=document.querySelectorAll('.intro .section-label,.intro h2,.intro-copy,.service-heading,.service-card,.section-top>div,.zone-card,.space-note,.kitchen-photo,.kitchen-copy>*,.lounge-content>*,.opening-copy>*,.form-panel,.contacts>div');
+const revealNodes=[...document.querySelectorAll('.intro .section-label,.intro h2,.intro-copy,.service-heading,.service-card,.section-top>div,.zone-card,.space-note,.kitchen-photo,.kitchen-copy>*,.lounge-content>*,.opening-copy>*,.form-panel,.contacts>div')].filter(el=>!el.matches('h2'));
 let revealObserver;
 function setupScrollMotion(){
  revealObserver?.disconnect();
@@ -88,3 +88,14 @@ window.addEventListener('scroll',()=>{if(!driftPending){driftPending=true;reques
 const loopHeadings=document.querySelectorAll('main h1,main h2,main h3');
 const headingObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>target.classList.toggle('heading-loop-active',isIntersecting)),{threshold:.1});
 loopHeadings.forEach(el=>{el.classList.add('heading-loop');headingObserver.observe(el)});
+
+// A second beat for typography after the surrounding surface arrives.
+const textStages=document.querySelectorAll('.intro,.service-heading,.service-card,.section-top>div:first-child,.zone-card,.kitchen-copy,.lounge-content,.opening-copy,.form-panel,.contacts>div');
+const textStageObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('text-stage-ready');textStageObserver.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -25px 0px'});
+textStages.forEach((stage,i)=>{
+ const title=stage.querySelector('h2,h3');if(!title)return;
+ stage.classList.add('text-stage');
+ title.classList.add('staged-title');title.dataset.entrance=['left','up','right'][i%3];
+ const copy=stage.querySelector('p');if(copy)copy.classList.add('staged-copy');
+ textStageObserver.observe(stage);
+});
