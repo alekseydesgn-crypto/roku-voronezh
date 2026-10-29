@@ -122,3 +122,9 @@ h1,h2,h3{font-family:"TT Octosquares Expanded",Xolonium,sans-serif;font-weight:9
  main .heading-loop,main .heading-loop:hover{animation:heading-glitch-loop 5s linear infinite;animation-play-state:paused}
  main .heading-loop.heading-loop-active{animation-play-state:running}
 }
+
+/* Keep the dark overlay on the photo layer, below all lounge copy. */
+.lounge{isolation:isolate;overflow:hidden}
+.lounge>img{z-index:0}
+.lounge-shade{z-index:1;pointer-events:none}
+.lounge-content{z-index:2;opacity:1}
