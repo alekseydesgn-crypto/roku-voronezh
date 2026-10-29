@@ -69,3 +69,17 @@ function resetAllMotion(){motionTargets.forEach(resetMotion)}
 motionReduced.addEventListener('change',resetAllMotion);motionPointer.addEventListener('change',resetAllMotion);window.addEventListener('blur',resetAllMotion);
 
 bindShortWords(document.body);
+
+// Reveal content as it enters the viewport; keep it readable without JS/motion.
+const revealNodes=document.querySelectorAll('.intro .section-label,.intro h2,.intro-copy,.service-heading,.service-card,.section-top>div,.zone-card,.space-note,.kitchen-photo,.kitchen-copy>*,.lounge-content>*,.opening-copy>*,.form-panel,.contacts>div');
+let revealObserver;
+function setupScrollMotion(){
+ revealObserver?.disconnect();
+ if(motionReduced.matches){revealNodes.forEach(el=>el.classList.remove('motion-reveal'));return}
+ revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}})},{threshold:.08,rootMargin:'0px 0px -25px 0px'});
+ revealNodes.forEach(el=>{el.classList.add('motion-reveal');if(el.matches('.service-card,.zone-card'))el.style.setProperty('--reveal-delay',`${Math.min([...el.parentElement.children].indexOf(el),2)*100}ms`);revealObserver.observe(el)});
+}
+setupScrollMotion();motionReduced.addEventListener('change',setupScrollMotion);
+const loungeSection=document.querySelector('.lounge');let driftPending=false;
+function updateScrollDrift(){driftPending=false;if(motionReduced.matches)return;const r=loungeSection.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){const progress=(innerHeight-r.top)/(innerHeight+r.height);loungeSection.style.setProperty('--scroll-drift',`${(progress-.5)*65}px`)}}
+window.addEventListener('scroll',()=>{if(!driftPending){driftPending=true;requestAnimationFrame(updateScrollDrift)}},{passive:true});updateScrollDrift();
