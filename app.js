@@ -85,6 +85,6 @@ function updateScrollDrift(){driftPending=false;if(motionReduced.matches)return;
 window.addEventListener('scroll',()=>{if(!driftPending){driftPending=true;requestAnimationFrame(updateScrollDrift)}},{passive:true});updateScrollDrift();
 
 // Repeat only the heading glitch while visible; entrances remain scroll-triggered.
-const loopHeadings=document.querySelectorAll('main h1,main h2');
+const loopHeadings=document.querySelectorAll('main h1,main h2,main h3');
 const headingObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>target.classList.toggle('heading-loop-active',isIntersecting)),{threshold:.1});
 loopHeadings.forEach(el=>{el.classList.add('heading-loop');headingObserver.observe(el)});
