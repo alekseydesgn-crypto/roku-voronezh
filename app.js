@@ -14,7 +14,7 @@ const track=document.querySelector('#zone-track');
 zones.forEach((z,i)=>{const b=document.createElement('button');b.className='zone-card';b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-label',`${z.name}: фото и характеристики`);b.innerHTML=`<div class="zone-image"><img src="assets/${z.images[0]}.webp" alt="${z.render?'Визуализация':'Фото клуба'}: ${z.name}" loading="lazy"><span class="open-icon" aria-hidden="true">↗</span></div><span class="zone-category">${z.type}${z.render?' · ВИЗУАЛИЗАЦИЯ':''}</span><h3>${z.name.toUpperCase()}</h3><p>${z.description}</p><div class="card-bottom"><span>Фото и ${i===3?'детали':'характеристики'}</span><b aria-hidden="true">↗</b></div>`;b.addEventListener('click',()=>openZone(i,b));track.append(b)});
 let activeZone=0,activePhoto=0,lastTrigger=null;
 const dialog=document.querySelector('#zone-dialog');
-function showPhoto(index){const z=zones[activeZone];activePhoto=(index+z.images.length)%z.images.length;const im=document.querySelector('#dialog-image');im.src=`assets/${z.images[activePhoto]}.webp`;im.alt=`${z.name} — ${z.render?'визуализация':'фото клуба'}, ракурс ${activePhoto+1}`;document.querySelector('#photo-count').textContent=`0${activePhoto+1} / 0${z.images.length}`;document.querySelectorAll('#thumbnails button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===activePhoto)))}
+function showPhoto(index){const z=zones[activeZone];activePhoto=(index+z.images.length)%z.images.length;const im=document.querySelector('#dialog-image');fadePhoto(im,`assets/${z.images[activePhoto]}.webp`,`${z.name} — ${z.render?'визуализация':'фото клуба'}, ракурс ${activePhoto+1}`);document.querySelector('#photo-count').textContent=`0${activePhoto+1} / 0${z.images.length}`;document.querySelectorAll('#thumbnails button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===activePhoto)))}
 function openZone(index,trigger){activeZone=index;lastTrigger=trigger;const z=zones[index];document.querySelector('#dialog-title').textContent=z.name.toUpperCase();document.querySelector('#dialog-type').textContent=z.type+(z.render?' / ВИЗУАЛИЗАЦИЯ':'');document.querySelector('#dialog-description').textContent=z.description;document.querySelector('#specs').replaceChildren();z.specs.forEach(s=>{const row=document.createElement('div');const dt=document.createElement('dt');dt.textContent=s;const dd=document.createElement('dd');dd.textContent='Скоро объявим';row.append(dt,dd);document.querySelector('#specs').append(row)});document.querySelector('#thumbnails').replaceChildren();z.images.forEach((n,i)=>{const b=document.createElement('button');b.setAttribute('aria-label',`Показать ракурс ${i+1}`);b.innerHTML=`<img src="assets/${n}.webp" alt="" loading="lazy">`;b.addEventListener('click',()=>showPhoto(i));document.querySelector('#thumbnails').append(b)});showPhoto(0);bindShortWords(dialog);dialog.showModal();document.body.classList.add('modal-open');dialog.scrollTop=0}
 document.querySelector('#photo-prev').addEventListener('click',()=>showPhoto(activePhoto-1));document.querySelector('#photo-next').addEventListener('click',()=>showPhoto(activePhoto+1));
 dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();showPhoto(activePhoto-1)}if(e.key==='ArrowRight'){e.preventDefault();showPhoto(activePhoto+1)}});
@@ -140,3 +140,39 @@ foodGallery.addEventListener('pointerdown',()=>{foodTouching=true;stopFoodAuto()
 window.addEventListener('pointerup',()=>{if(foodTouching){foodTouching=false;scheduleFoodAuto()}},{passive:true});
 window.addEventListener('pointercancel',()=>{if(foodTouching){foodTouching=false;scheduleFoodAuto()}},{passive:true});
 foodGallery.addEventListener('keydown',scheduleFoodAuto);
+
+// Shared photo dissolve for cards, lounge and the open gallery.
+const photoSwapTickets=new WeakMap();
+async function fadePhoto(im,src,alt){
+ const ticket={};photoSwapTickets.set(im,ticket);
+ const incoming=new Image();incoming.src=src;
+ try{await incoming.decode()}catch{return}
+ if(photoSwapTickets.get(im)!==ticket)return;
+ if(im.getAttribute('src')===src){im.alt=alt;return}
+ const old=im.cloneNode();old.removeAttribute('id');old.alt='';old.setAttribute('aria-hidden','true');old.classList.add('photo-ghost');
+ const style=getComputedStyle(im);old.style.objectFit=style.objectFit;old.style.objectPosition=style.objectPosition;
+ im.parentElement.querySelectorAll('.photo-ghost').forEach(el=>el.remove());
+ if(!motionReduced.matches)im.parentElement.append(old);
+ im.src=src;im.alt=alt;
+ requestAnimationFrame(()=>requestAnimationFrame(()=>old.classList.add('photo-ghost-out')));
+ setTimeout(()=>old.remove(),900);
+}
+function visiblePhotoAuto(target,advance,allowed=()=>true){
+ let visible=false,timer=null;
+ function stop(){clearTimeout(timer);timer=null}
+ function schedule(){stop();if(!visible||document.hidden||motionReduced.matches||!allowed())return;timer=setTimeout(()=>{if(allowed())advance();schedule()},3000)}
+ new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;schedule()},{threshold:.15}).observe(target);
+ document.addEventListener('visibilitychange',schedule);motionReduced.addEventListener('change',schedule);
+ target.addEventListener('pointerdown',stop,{passive:true});target.addEventListener('pointerup',schedule,{passive:true});target.addEventListener('pointercancel',schedule,{passive:true});target.addEventListener('keydown',schedule);
+ document.querySelectorAll('dialog').forEach(d=>d.addEventListener('close',schedule));
+ return schedule;
+}
+document.querySelectorAll('.zone-card').forEach((card,i)=>{
+ let photo=0;const z=zones[i],im=card.querySelector('.zone-image>img');
+ visiblePhotoAuto(card,()=>{photo=(photo+1)%z.images.length;fadePhoto(im,`assets/${z.images[photo]}.webp`,`${z.render?'Визуализация':'Фото клуба'}: ${z.name}, ракурс ${photo+1}`)},()=>!document.body.classList.contains('modal-open'));
+});
+const loungeFrames=['live-lounge-sofa','live-lounge-wide','live-lounge-evening','live-lounge-friends','live-atmosphere','live-company-evening'];let loungePhoto=0;
+visiblePhotoAuto(loungeSection,()=>{loungePhoto=(loungePhoto+1)%loungeFrames.length;fadePhoto(loungeSection.querySelector(':scope>img:not(.photo-ghost)'),`assets/${loungeFrames[loungePhoto]}.webp`,'Лаунж ROKU в Воронеже')},()=>!document.body.classList.contains('modal-open'));
+const dialogImage=document.querySelector('#dialog-image');const dialogImageStage=document.createElement('div');dialogImageStage.className='dialog-image-stage';dialogImage.before(dialogImageStage);dialogImageStage.append(dialogImage);
+const restartDialogAuto=visiblePhotoAuto(dialogImageStage,()=>showPhoto(activePhoto+1),()=>dialog.open);
+dialog.addEventListener('click',restartDialogAuto);dialog.addEventListener('keydown',restartDialogAuto);
