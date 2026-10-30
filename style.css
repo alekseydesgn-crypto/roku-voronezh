@@ -165,3 +165,5 @@ h1,h2,h3{font-family:"TT Octosquares Expanded",Xolonium,sans-serif;font-weight:9
 .food-enhanced .food-active img{scale:1}
 .food-controls,.food-gallery .photo-mark{z-index:2}
 @media(prefers-reduced-motion:reduce){.food-enhanced .food-slide img{scale:1}}
+
+.hero-film-track{animation-duration:120s}@media(max-width:760px){.hero-film-track{animation-duration:90s}}
