@@ -109,3 +109,24 @@ foodPrev.addEventListener('click',()=>stepFood(-1));foodNext.addEventListener('c
 foodTrack.addEventListener('scroll',updateFoodGallery,{passive:true});
 foodTrack.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();stepFood(e.key==='ArrowRight'?1:-1)}});
 window.addEventListener('resize',updateFoodGallery);updateFoodGallery();
+
+// Advance every three seconds only while the food photo is in view.
+const foodGallery=document.querySelector('.food-gallery');
+let foodVisible=false,foodAutoTimer=null,foodTouching=false;
+function stopFoodAuto(){clearTimeout(foodAutoTimer);foodAutoTimer=null}
+function scheduleFoodAuto(){
+ stopFoodAuto();
+ if(!foodVisible||document.hidden||motionReduced.matches||foodTouching)return;
+ foodAutoTimer=setTimeout(()=>{
+  const next=(foodIndex()+1)%foodTrack.children.length;
+  foodTrack.scrollTo({left:next*foodTrack.clientWidth,behavior:next===0?'instant':'smooth'});
+  scheduleFoodAuto();
+ },3000);
+}
+new IntersectionObserver(([entry])=>{foodVisible=entry.isIntersecting;scheduleFoodAuto()},{threshold:.35}).observe(foodGallery);
+document.addEventListener('visibilitychange',scheduleFoodAuto);
+motionReduced.addEventListener('change',scheduleFoodAuto);
+foodGallery.addEventListener('pointerdown',()=>{foodTouching=true;stopFoodAuto()},{passive:true});
+window.addEventListener('pointerup',()=>{if(foodTouching){foodTouching=false;scheduleFoodAuto()}},{passive:true});
+window.addEventListener('pointercancel',()=>{if(foodTouching){foodTouching=false;scheduleFoodAuto()}},{passive:true});
+foodGallery.addEventListener('keydown',scheduleFoodAuto);

@@ -154,3 +154,5 @@ h1,h2,h3{font-family:"TT Octosquares Expanded",Xolonium,sans-serif;font-weight:9
 .food-controls>span{font-family:Xolonium,sans-serif;font-size:10px;min-width:60px;text-align:center}
 .food-gallery .photo-mark{top:20px;bottom:auto;left:20px;pointer-events:none}
 @media(max-width:760px){.food-controls{bottom:14px;right:14px}.food-gallery .photo-mark{top:14px;left:14px}}
+
+.food-controls{border-radius:999px}
