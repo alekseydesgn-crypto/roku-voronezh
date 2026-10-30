@@ -156,3 +156,12 @@ h1,h2,h3{font-family:"TT Octosquares Expanded",Xolonium,sans-serif;font-weight:9
 @media(max-width:760px){.food-controls{bottom:14px;right:14px}.food-gallery .photo-mark{top:14px;left:14px}}
 
 .food-controls{border-radius:999px}
+
+/* Layered dissolve keeps the last-to-first transition as smooth as every other. */
+.food-track.food-enhanced{position:relative;display:block;overflow:hidden;touch-action:pan-y;scroll-snap-type:none}
+.food-enhanced .food-slide{position:absolute;inset:0;opacity:0;z-index:0;pointer-events:none;transition:opacity .85s cubic-bezier(.22,.61,.36,1)}
+.food-enhanced .food-slide img{scale:1.045;transition:scale 1.5s cubic-bezier(.16,1,.3,1)}
+.food-enhanced .food-slide.food-active{opacity:1;z-index:1;pointer-events:auto}
+.food-enhanced .food-active img{scale:1}
+.food-controls,.food-gallery .photo-mark{z-index:2}
+@media(prefers-reduced-motion:reduce){.food-enhanced .food-slide img{scale:1}}

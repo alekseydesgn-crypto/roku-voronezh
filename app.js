@@ -102,13 +102,23 @@ textStages.forEach((stage,i)=>{
 
 const foodTrack=document.querySelector('#food-track');
 const foodPrev=document.querySelector('#food-prev'),foodNext=document.querySelector('#food-next');
-function foodIndex(){return Math.round(foodTrack.scrollLeft/foodTrack.clientWidth)}
-function updateFoodGallery(){const i=foodIndex();document.querySelector('#food-count').textContent=`0${i+1} / 0${foodTrack.children.length}`;foodPrev.disabled=i===0;foodNext.disabled=i===foodTrack.children.length-1}
-function stepFood(step){foodTrack.scrollTo({left:Math.max(0,Math.min(foodTrack.children.length-1,foodIndex()+step))*foodTrack.clientWidth,behavior:motionReduced.matches?'instant':'smooth'})}
+let activeFood=0,foodSwipeStart=null;
+const foodSlides=[...foodTrack.children];
+foodTrack.classList.add('food-enhanced');
+foodSlides.forEach(slide=>{slide.querySelector('img').loading='eager'});
+function foodIndex(){return activeFood}
+function updateFoodGallery(){
+ foodSlides.forEach((slide,i)=>{slide.classList.toggle('food-active',i===activeFood);slide.setAttribute('aria-hidden',String(i!==activeFood))});
+ document.querySelector('#food-count').textContent=`0${activeFood+1} / 0${foodSlides.length}`;
+ foodPrev.disabled=foodNext.disabled=foodSlides.length<2;
+}
+function stepFood(step){activeFood=(activeFood+step+foodSlides.length)%foodSlides.length;updateFoodGallery()}
 foodPrev.addEventListener('click',()=>stepFood(-1));foodNext.addEventListener('click',()=>stepFood(1));
-foodTrack.addEventListener('scroll',updateFoodGallery,{passive:true});
 foodTrack.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();stepFood(e.key==='ArrowRight'?1:-1)}});
-window.addEventListener('resize',updateFoodGallery);updateFoodGallery();
+foodTrack.addEventListener('touchstart',e=>{foodSwipeStart=e.changedTouches[0].clientX},{passive:true});
+foodTrack.addEventListener('touchend',e=>{if(foodSwipeStart===null)return;const dx=e.changedTouches[0].clientX-foodSwipeStart;if(Math.abs(dx)>40)stepFood(dx<0?1:-1);foodSwipeStart=null},{passive:true});
+foodTrack.addEventListener('touchcancel',()=>{foodSwipeStart=null},{passive:true});
+updateFoodGallery();
 
 // Advance every three seconds only while the food photo is in view.
 const foodGallery=document.querySelector('.food-gallery');
@@ -118,8 +128,7 @@ function scheduleFoodAuto(){
  stopFoodAuto();
  if(!foodVisible||document.hidden||motionReduced.matches||foodTouching)return;
  foodAutoTimer=setTimeout(()=>{
-  const next=(foodIndex()+1)%foodTrack.children.length;
-  foodTrack.scrollTo({left:next*foodTrack.clientWidth,behavior:next===0?'instant':'smooth'});
+  stepFood(1);
   scheduleFoodAuto();
  },3000);
 }
