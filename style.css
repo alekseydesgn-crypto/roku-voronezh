@@ -265,3 +265,5 @@ h1,h2,h3{font-family:"TT Octosquares Expanded",Xolonium,sans-serif;font-weight:9
 /* Contain entrance offsets and photo parallax within the page canvas. */
 main{overflow:clip}
 @media(max-width:360px){.hero h1{font-size:25px}.hero-content{padding-top:64px}.hero .eyebrow{font-size:6.5px}}
+
+#zone-dialog.single-photo .gallery-toolbar,#zone-dialog.single-photo .thumbnails{display:none}
