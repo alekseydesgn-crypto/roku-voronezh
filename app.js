@@ -99,3 +99,13 @@ textStages.forEach((stage,i)=>{
  const copy=stage.querySelector('p');if(copy)copy.classList.add('staged-copy');
  textStageObserver.observe(stage);
 });
+
+const foodTrack=document.querySelector('#food-track');
+const foodPrev=document.querySelector('#food-prev'),foodNext=document.querySelector('#food-next');
+function foodIndex(){return Math.round(foodTrack.scrollLeft/foodTrack.clientWidth)}
+function updateFoodGallery(){const i=foodIndex();document.querySelector('#food-count').textContent=`0${i+1} / 0${foodTrack.children.length}`;foodPrev.disabled=i===0;foodNext.disabled=i===foodTrack.children.length-1}
+function stepFood(step){foodTrack.scrollTo({left:Math.max(0,Math.min(foodTrack.children.length-1,foodIndex()+step))*foodTrack.clientWidth,behavior:motionReduced.matches?'instant':'smooth'})}
+foodPrev.addEventListener('click',()=>stepFood(-1));foodNext.addEventListener('click',()=>stepFood(1));
+foodTrack.addEventListener('scroll',updateFoodGallery,{passive:true});
+foodTrack.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();stepFood(e.key==='ArrowRight'?1:-1)}});
+window.addEventListener('resize',updateFoodGallery);updateFoodGallery();
