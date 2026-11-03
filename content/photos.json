@@ -1,0 +1,62 @@
+{
+  "hero": [
+    "assets/live-gaming-wide.webp",
+    "assets/live-lounge-evening.webp",
+    "assets/live-gaming-player.webp",
+    "assets/live-console-company.webp",
+    "assets/live-lounge-sofa.webp",
+    "assets/live-pc-detail.webp",
+    "assets/live-lounge-friends.webp",
+    "assets/live-company-evening.webp"
+  ],
+  "food": [
+    {
+      "image": "assets/food-burger.webp",
+      "alt": "Бургер с картофелем фри из кухни ROKU"
+    },
+    {
+      "image": "assets/food-pizza.webp",
+      "alt": "Пицца из кухни ROKU"
+    },
+    {
+      "image": "assets/food-sandwich.webp",
+      "alt": "Сэндвич из кухни ROKU"
+    },
+    {
+      "image": "assets/food-pasta.webp",
+      "alt": "Паста из кухни ROKU"
+    },
+    {
+      "image": "assets/food-salad.webp",
+      "alt": "Салат из кухни ROKU"
+    },
+    {
+      "image": "assets/food-breakfast.webp",
+      "alt": "Завтрак из кухни ROKU"
+    },
+    {
+      "image": "assets/food-potatoes.webp",
+      "alt": "Картофельное блюдо из кухни ROKU"
+    },
+    {
+      "image": "assets/food-rice.webp",
+      "alt": "Горячее блюдо с рисом из кухни ROKU"
+    },
+    {
+      "image": "assets/food-shrimp.webp",
+      "alt": "Креветки из кухни ROKU"
+    },
+    {
+      "image": "assets/food-wrap.webp",
+      "alt": "Ролл из кухни ROKU"
+    }
+  ],
+  "lounge": [
+    "assets/live-lounge-sofa.webp",
+    "assets/live-lounge-wide.webp",
+    "assets/live-lounge-evening.webp",
+    "assets/live-lounge-friends.webp",
+    "assets/live-atmosphere.webp",
+    "assets/live-company-evening.webp"
+  ]
+}

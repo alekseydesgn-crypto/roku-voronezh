@@ -1,0 +1,482 @@
+{
+  "media": {
+    "input": "assets",
+    "output": "assets",
+    "rename": "safe",
+    "extensions": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp",
+      "avif"
+    ]
+  },
+  "content": [
+    {
+      "name": "site",
+      "label": "Тексты, акция и контакты",
+      "type": "file",
+      "path": "content/site.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "general",
+          "label": "Настройки и соцсети",
+          "type": "object",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Название вкладки / SEO",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "label": "Описание для поиска",
+              "type": "text"
+            },
+            {
+              "name": "city",
+              "label": "Город",
+              "type": "string"
+            },
+            {
+              "name": "vk",
+              "label": "Ссылка VK",
+              "type": "string",
+              "description": "Оставьте пустым, если страницы ещё нет."
+            },
+            {
+              "name": "telegram",
+              "label": "Ссылка Telegram",
+              "type": "string",
+              "description": "Оставьте пустым, если страницы ещё нет."
+            }
+          ]
+        },
+        {
+          "name": "hero",
+          "label": "Первый экран",
+          "type": "object",
+          "fields": [
+            {
+              "name": "eyebrow",
+              "label": "Надпись над заголовком",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Вторая строка — начало",
+              "type": "string"
+            },
+            {
+              "name": "accent",
+              "label": "Вторая строка — выделение",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            },
+            {
+              "name": "button",
+              "label": "Кнопка",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "intro",
+          "label": "Знакомство",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "service",
+          "label": "Сервис",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "cards",
+              "label": "Три преимущества",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "title",
+                  "label": "Заголовок",
+                  "type": "text"
+                },
+                {
+                  "name": "body",
+                  "label": "Описание",
+                  "type": "text"
+                }
+              ],
+              "list": {
+                "min": 3,
+                "max": 3,
+                "collapsible": {
+                  "summary": "{title}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "space",
+          "label": "Игровое пространство",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            },
+            {
+              "name": "note",
+              "label": "Подпись под зонами",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "kitchen",
+          "label": "Кухня",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "lead",
+              "label": "Вводный текст",
+              "type": "text"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            },
+            {
+              "name": "noteTitle",
+              "label": "Подзаголовок меню",
+              "type": "string"
+            },
+            {
+              "name": "note",
+              "label": "Подпись меню",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "lounge",
+          "label": "Лаунж",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "accent",
+              "label": "Выделенное слово",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            },
+            {
+              "name": "signature",
+              "label": "Подпись справа",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "opening",
+          "label": "Акция / день открытых дверей",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "lead",
+              "label": "Вводный текст",
+              "type": "text"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            },
+            {
+              "name": "date",
+              "label": "Дата или статус",
+              "type": "string"
+            },
+            {
+              "name": "note",
+              "label": "Условия акции",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "contacts",
+          "label": "Адрес и контакты",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Метка раздела",
+              "type": "string"
+            },
+            {
+              "name": "first",
+              "label": "Заголовок — первая строка",
+              "type": "string"
+            },
+            {
+              "name": "second",
+              "label": "Заголовок — вторая строка",
+              "type": "string"
+            },
+            {
+              "name": "accent",
+              "label": "Выделенное слово",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Описание",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zones",
+      "label": "Игровые зоны и характеристики",
+      "type": "file",
+      "path": "content/zones.json",
+      "format": "json",
+      "list": true,
+      "fields": [
+        {
+          "name": "name",
+          "label": "Название",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "type",
+          "label": "Категория",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Описание",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "render",
+          "label": "Это визуализация",
+          "type": "boolean"
+        },
+        {
+          "name": "images",
+          "label": "Фотографии",
+          "type": "image",
+          "required": true,
+          "options": {
+            "multiple": {
+              "max": 12
+            },
+            "unique": true
+          },
+          "description": "Оставьте одну фотографию, чтобы зона была статичной. Автолистание карточек отключено."
+        },
+        {
+          "name": "specs",
+          "label": "Характеристики",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Параметр",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "value",
+              "label": "Значение",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "list": {
+            "min": 1,
+            "max": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "photos",
+      "label": "Фото главной, кухни и лаунжа",
+      "type": "file",
+      "path": "content/photos.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "hero",
+          "label": "Лента на главной",
+          "type": "image",
+          "required": true,
+          "options": {
+            "multiple": {
+              "max": 20
+            },
+            "unique": true
+          }
+        },
+        {
+          "name": "food",
+          "label": "Галерея блюд",
+          "type": "object",
+          "fields": [
+            {
+              "name": "image",
+              "label": "Фото",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Что изображено",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "list": {
+            "min": 1,
+            "max": 30,
+            "collapsible": {
+              "summary": "{alt}"
+            }
+          }
+        },
+        {
+          "name": "lounge",
+          "label": "Фотографии лаунжа",
+          "type": "image",
+          "required": true,
+          "options": {
+            "multiple": {
+              "max": 20
+            },
+            "unique": true
+          }
+        }
+      ]
+    }
+  ]
+}
