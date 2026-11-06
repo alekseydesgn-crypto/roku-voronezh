@@ -25,7 +25,7 @@ test('fetch failures and invalid JSON use fallback; unaffected content still loa
 });
 test('CMS fields correspond to actual JSON data',()=>{
  const config=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../.pages.yml'),'utf8'));
- function check(fields,data){for(const field of fields){assert.ok(Object.hasOwn(data,field.name),field.name);if(field.type==='object'){const values=field.list?data[field.name]:[data[field.name]];values.forEach(value=>check(field.fields,value))}}}
+ function check(fields,data){for(const field of fields){if(!Object.hasOwn(data,field.name)){assert.ok(!field.required,field.name);continue}if(field.type==='object'){const values=field.list?data[field.name]:[data[field.name]];values.forEach(value=>check(field.fields,value))}}}
  for(const section of config.content){let data=read(section.name);if(!section.list)data=[data];data.forEach(value=>check(section.fields,value))}
 });
 
@@ -39,4 +39,8 @@ test('client price list includes five zones and both PlayStation tariff groups',
 });
 test('Voronezh FAQ has no Moscow address or unsupported GPU models',()=>{
  const faq=read('faq');assert.ok(cms.faqData(faq));assert.equal(faq.length,6);assert.doesNotMatch(JSON.stringify(faq),/Москв|Новослобод|Менделеев|5090|9800/);assert.equal(cms.faqData([{question:'q',answer:42}]),null);
+});
+
+test('Pages CMS may omit empty optional fields without invalidating content',()=>{
+ const site=read('site');delete site.general.vk;delete site.general.telegram;delete site.hero.second;assert.ok(cms.siteData(site));
 });

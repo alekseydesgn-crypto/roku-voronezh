@@ -52,11 +52,12 @@
  function apply(content){
   const text=(selector,value)=>{if(typeof value!=='string')return;const el=document.querySelector(selector);if(!el)return;const fragment=document.createDocumentFragment();value.split('\n').forEach((line,i)=>{if(i)fragment.append(document.createElement('br'));fragment.append(document.createTextNode(line))});el.replaceChildren(fragment)};
   function title(selector,data,style='em',extra=false){
-   if(!data||typeof data.first!=='string'||typeof data.second!=='string')return;
+   if(!data||typeof data!=='object')return;
+   const first=typeof data.first==='string'?data.first:'',secondLine=typeof data.second==='string'?data.second:'';
    const el=document.querySelector(selector);if(!el)return;
-   el.replaceChildren(document.createTextNode(data.first),document.createElement('br'));
-   if(extra){el.append(document.createTextNode(data.second+' '));const accent=document.createElement('em');accent.textContent=typeof data.accent==='string'?data.accent:'';el.append(accent)}
-   else{const second=document.createElement(style==='muted'?'span':'em');if(style==='muted')second.className='muted';second.textContent=data.second;el.append(second)}
+   el.replaceChildren(document.createTextNode(first),document.createElement('br'));
+   if(extra){el.append(document.createTextNode(secondLine?secondLine+' ':''));const accent=document.createElement('em');accent.textContent=typeof data.accent==='string'?data.accent:'';el.append(accent)}
+   else{const second=document.createElement(style==='muted'?'span':'em');if(style==='muted')second.className='muted';second.textContent=secondLine;el.append(second)}
   }
   const s=content.site;
   if(s){
