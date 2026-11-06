@@ -1,15 +1,12 @@
 {
   "general": {
     "title": "ROKU — Cyber Lounge · Воронеж",
-    "description": "ROKU Cyber Lounge в Воронеже. Игровое пространство, кухня и лаунж. Познакомься с пространством нового клуба.",
-    "city": "ВОРОНЕЖ",
-    "vk": "",
-    "telegram": ""
+    "description": "ROKU Cyber Lounge в Воронеже. Игровые зоны COMFORT, BOOTCAMP, VIP PC и PlayStation, кухня ресторанного уровня и лаунж.",
+    "city": "ВОРОНЕЖ"
   },
   "hero": {
     "eyebrow": "НОВАЯ ТОЧКА ПРИТЯЖЕНИЯ В ВОРОНЕЖЕ",
     "first": "ROKU",
-    "second": "",
     "accent": "КИБЕР-ЛАУНЖ",
     "body": "Твое кибер-пространство с лучшими ПК и сервисом в РФ",
     "button": "Попасть на открытие"
