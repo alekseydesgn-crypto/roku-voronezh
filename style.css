@@ -303,3 +303,8 @@ main{overflow:clip}
 @media(max-width:639px){.hero h1{font-size:clamp(21px,6.1vw,34px)}.service-card h3{font-size:18px}.zone-card h3,.zone-card:last-child h3{font-size:clamp(17px,5vw,23px)}.zone-category{font-size:8px}.faq-heading{gap:12px}.faq-heading img{width:65px}.faq-heading h2{font-size:28px}.faq-item summary{padding:18px 16px;gap:16px}.faq-answer{padding:20px 16px 4px}.faq-answer p{font-size:13px}.zone-pricing dl>div{font-size:12px}.intro-section .intro{padding-block:80px}}
 .carousel-controls{flex-shrink:0}.carousel-controls>span{white-space:nowrap}
 .zone-image>img{object-position:center 65%}
+
+/* Use one heading scale for the mobile hero and the section that follows it. */
+@media(max-width:760px){
+ .hero h1,.section-top h2{font-size:clamp(24px,7.5vw,42px);line-height:1.2;letter-spacing:-.025em}
+}
