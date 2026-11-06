@@ -52,11 +52,13 @@
     }
   ],
   "lounge": [
-    "assets/live-lounge-sofa.webp",
-    "assets/live-lounge-wide.webp",
-    "assets/live-lounge-evening.webp",
-    "assets/live-lounge-friends.webp",
-    "assets/live-atmosphere.webp",
-    "assets/live-company-evening.webp"
+    "assets/39.webp",
+    "assets/38.webp",
+    "assets/40.webp"
+  ],
+  "intro": [
+    "assets/39.webp",
+    "assets/38.webp",
+    "assets/40.webp"
   ]
 }

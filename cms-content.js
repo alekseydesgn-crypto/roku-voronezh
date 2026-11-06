@@ -13,6 +13,8 @@
    if(!z||!['name','type','description'].every(k=>typeof z[k]==='string'&&z[k].length<=3000))return null;
    if(!Array.isArray(z.images)||!z.images.length||z.images.length>12||z.images.some(x=>!imagePath(x)))return null;
    if(!Array.isArray(z.specs)||z.specs.length>20||z.specs.some(x=>!x||typeof x.label!=='string'||typeof x.value!=='string'))return null;
+   if(z.priceFrom!==undefined&&typeof z.priceFrom!=='string')return null;
+   if(z.tariffs!==undefined&&(!Array.isArray(z.tariffs)||z.tariffs.length>6||z.tariffs.some(g=>!g||typeof g.title!=='string'||!Array.isArray(g.rows)||g.rows.length>30||g.rows.some(row=>!row||typeof row.label!=='string'||typeof row.value!=='string'))))return null;
    return {...z,render:z.render===true,images:z.images.map(imagePath)};
   });
   return out.every(Boolean)?out:null;
@@ -21,6 +23,7 @@
   if(!data||!Array.isArray(data.hero)||!data.hero.length||data.hero.length>20||data.hero.some(x=>!imagePath(x)))return null;
   if(!Array.isArray(data.lounge)||!data.lounge.length||data.lounge.length>20||data.lounge.some(x=>!imagePath(x)))return null;
   if(!Array.isArray(data.food)||!data.food.length||data.food.length>30||data.food.some(x=>!x||!imagePath(x.image)||typeof x.alt!=='string'))return null;
+  if(data.intro!==undefined&&(!Array.isArray(data.intro)||!data.intro.length||data.intro.length>20||data.intro.some(x=>!imagePath(x))))return null;
   return data;
  }
  function siteData(data){
@@ -36,8 +39,9 @@
   // Only known text fields are applied below; no HTML from the CMS is evaluated.
   return data;
  }
+ function faqData(data){return Array.isArray(data)&&data.length>0&&data.length<=20&&data.every(x=>x&&typeof x.question==='string'&&x.question.length<=300&&typeof x.answer==='string'&&x.answer.length<=5000)?data:null}
  async function load(fetcher=fetch){
-  const validators={site:siteData,zones:zoneData,photos:photoData};
+  const validators={site:siteData,zones:zoneData,photos:photoData,faq:faqData};
   const entries=await Promise.all(Object.keys(validators).map(async key=>{
    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),3000);
    try{const response=await fetcher(`content/${key}.json`,{cache:'no-store',signal:controller.signal});if(!response.ok)return [key,null];return [key,validators[key](await response.json())]}
@@ -75,15 +79,21 @@
    });
    document.querySelector('.social-soon').hidden=activeSocials>0;
   }
+  if(content.faq)renderFaq(content.faq);
   const photos=content.photos;
   if(photos){
    const image=(src,alt)=>{const img=document.createElement('img');img.src=imagePath(src);img.alt=alt;img.decoding='async';return img};
    document.querySelectorAll('.hero-film-group').forEach((group,copy)=>{group.replaceChildren(...photos.hero.map((src,i)=>{const img=image(src,'');if(copy===0&&i===0)img.fetchPriority='high';return img}))});
    document.querySelector('#food-track').replaceChildren(...photos.food.map(item=>{const figure=document.createElement('figure');figure.className='food-slide';const img=image(item.image,item.alt);img.loading='lazy';figure.append(img);return figure}));
    document.querySelector('.lounge>img').src=imagePath(photos.lounge[0]);
+   if(photos.intro)document.querySelector('.intro-background>img').src=imagePath(photos.intro[0]);
   }
  }
- const api={load,apply,escapeHTML,imagePath,siteData,zoneData,photoData};
+ function renderFaq(items){
+  const list=document.querySelector('#faq-list');if(!list)return;
+  list.replaceChildren(...items.map((item,i)=>{const details=document.createElement('details'),summary=document.createElement('summary'),heading=document.createElement('h3'),icon=document.createElement('span'),answer=document.createElement('div'),p=document.createElement('p');details.className='faq-item';details.open=i===0;heading.textContent=item.question;icon.textContent='+';icon.setAttribute('aria-hidden','true');answer.className='faq-answer';p.textContent=item.answer;summary.append(heading,icon);answer.append(p);details.append(summary,answer);return details}));
+ }
+ const api={load,apply,escapeHTML,imagePath,siteData,zoneData,photoData,faqData};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;
  else root.RokuCMS=api;
 })(typeof window!=='undefined'?window:{});

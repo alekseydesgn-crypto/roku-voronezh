@@ -416,6 +416,45 @@
             "min": 1,
             "max": 20
           }
+        },
+        {
+          "name": "priceFrom",
+          "label": "Стоимость за час в карточке",
+          "type": "string"
+        },
+        {
+          "name": "tariffs",
+          "label": "Тарифные группы",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "title",
+              "label": "Название группы",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "rows",
+              "label": "Тарифы",
+              "type": "object",
+              "list": true,
+              "fields": [
+                {
+                  "name": "label",
+                  "label": "Время или пакет",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "value",
+                  "label": "Цена",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -475,6 +514,40 @@
             },
             "unique": true
           }
+        },
+        {
+          "name": "intro",
+          "label": "Фон знакомства — визуализации лаунжа",
+          "type": "image",
+          "required": true,
+          "options": {
+            "multiple": {
+              "max": 20
+            },
+            "unique": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "faq",
+      "label": "FAQ клуба",
+      "type": "file",
+      "path": "content/faq.json",
+      "format": "json",
+      "list": true,
+      "fields": [
+        {
+          "name": "question",
+          "label": "Вопрос",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "answer",
+          "label": "Ответ",
+          "type": "text",
+          "required": true
         }
       ]
     }

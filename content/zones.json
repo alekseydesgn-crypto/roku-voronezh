@@ -1,98 +1,208 @@
 [
   {
-    "name": "В центре игры",
-    "type": "PC / ИГРОВЫЕ МЕСТА",
-    "description": "Игровые станции и неоновый свет. Пространство, в котором всё внимание — на игре.",
-    "render": true,
+    "name": "ROKU COMFORT",
+    "type": "PC / ОБЩИЙ ЗАЛ",
+    "description": "Общий зал с потрясающим уровнем комфорта",
     "images": [
-      "assets/63.webp"
+      "assets/zone-comfort.webp"
     ],
     "specs": [
       {
+        "label": "Монитор",
+        "value": "240 Гц"
+      },
+      {
         "label": "Видеокарта",
-        "value": "Скоро объявим"
+        "value": "RTX 4060 Ti · 16 ГБ"
       },
       {
         "label": "Процессор",
-        "value": "Скоро объявим"
-      },
-      {
-        "label": "Оперативная память",
-        "value": "Скоро объявим"
-      },
-      {
-        "label": "Монитор / Гц",
-        "value": "Скоро объявим"
+        "value": "Ryzen 5 7500F"
       }
-    ]
+    ],
+    "priceFrom": "300 ₽ / час",
+    "tariffs": [
+      {
+        "title": "COMFORT",
+        "rows": [
+          {
+            "label": "1 час",
+            "value": "300 ₽"
+          },
+          {
+            "label": "3 часа",
+            "value": "850 ₽"
+          },
+          {
+            "label": "6 часов",
+            "value": "1 650 ₽"
+          },
+          {
+            "label": "Утро · 09:00–16:00",
+            "value": "950 ₽"
+          },
+          {
+            "label": "Ночь · 22:00–08:00",
+            "value": "1 450 ₽"
+          }
+        ]
+      }
+    ],
+    "render": true
   },
   {
-    "name": "Своя компания",
-    "type": "PC / КОМНАТА",
-    "description": "Игровые места и мягкая зона в одном пространстве. Чтобы быть в игре и оставаться вместе.",
-    "render": true,
+    "name": "ROKU BOOTCAMP",
+    "type": "PC / ШУМОИЗОЛИРОВАННАЯ ЗОНА",
+    "description": "Отдельная шумоизолированная игровая зона",
     "images": [
-      "assets/50.webp"
+      "assets/zone-bootcamp.webp"
     ],
     "specs": [
       {
+        "label": "Монитор",
+        "value": "240 Гц"
+      },
+      {
         "label": "Видеокарта",
-        "value": "Скоро объявим"
+        "value": "RTX 4070 SUPER · 12 ГБ"
       },
       {
         "label": "Процессор",
-        "value": "Скоро объявим"
-      },
-      {
-        "label": "Оперативная память",
-        "value": "Скоро объявим"
-      },
-      {
-        "label": "Монитор / Гц",
-        "value": "Скоро объявим"
+        "value": "Ryzen 5 7600X3D"
       }
-    ]
+    ],
+    "priceFrom": "550 ₽ / час",
+    "tariffs": [
+      {
+        "title": "BOOTCAMP",
+        "rows": [
+          {
+            "label": "1 час",
+            "value": "550 ₽"
+          },
+          {
+            "label": "3 часа",
+            "value": "1 550 ₽"
+          },
+          {
+            "label": "6 часов",
+            "value": "2 950 ₽"
+          },
+          {
+            "label": "Утро · 09:00–16:00",
+            "value": "1 850 ₽"
+          },
+          {
+            "label": "Ночь · 22:00–08:00",
+            "value": "2 750 ₽"
+          }
+        ]
+      }
+    ],
+    "render": true
   },
   {
-    "name": "На своей волне",
-    "type": "КОНСОЛЬ / ОТДЫХ",
-    "description": "Большой экран, диван и любимая компания. Другой ритм твоего игрового вечера.",
-    "render": true,
+    "name": "ROKU VIP PC",
+    "type": "PC / VIP-КОМНАТА",
+    "description": "Зона для большой компании + самые мощные ПК в СНГ",
+    "images": [
+      "assets/zone-vip-pc.webp"
+    ],
+    "specs": [
+      {
+        "label": "Монитор",
+        "value": "300 Гц"
+      },
+      {
+        "label": "Видеокарта",
+        "value": "RTX 4080 SUPER · 16 ГБ"
+      },
+      {
+        "label": "Процессор",
+        "value": "Ryzen 7 7800X3D"
+      }
+    ],
+    "priceFrom": "800 ₽ / час",
+    "tariffs": [
+      {
+        "title": "VIP PC",
+        "rows": [
+          {
+            "label": "1 час",
+            "value": "800 ₽"
+          },
+          {
+            "label": "Вся комната",
+            "value": "4 000 ₽"
+          }
+        ]
+      }
+    ],
+    "render": true
+  },
+  {
+    "name": "ROKU VIP PLAYSTATION",
+    "type": "КОНСОЛЬ / VIP",
+    "description": "Зона высочайшего комфорта и уединения",
     "images": [
       "assets/60.webp"
     ],
     "specs": [
       {
-        "label": "Консоль",
-        "value": "Скоро объявим"
+        "label": "VIP PLAYSTATION",
+        "value": "PS5 · TV 85″ · 240 Гц"
       },
       {
-        "label": "Экран",
-        "value": "Скоро объявим"
-      },
-      {
-        "label": "Количество мест",
-        "value": "Скоро объявим"
+        "label": "SUPER VIP PLAYSTATION",
+        "value": "PS5 Pro · TV 100″ · 240 Гц"
       }
-    ]
+    ],
+    "priceFrom": "950 ₽ / час",
+    "tariffs": [
+      {
+        "title": "VIP PLAYSTATION",
+        "rows": [
+          {
+            "label": "1 час",
+            "value": "950 ₽"
+          },
+          {
+            "label": "3 часа",
+            "value": "2 600 ₽"
+          }
+        ]
+      },
+      {
+        "title": "SUPER VIP PLAYSTATION",
+        "rows": [
+          {
+            "label": "1 час",
+            "value": "1 650 ₽"
+          },
+          {
+            "label": "3 часа",
+            "value": "4 450 ₽"
+          }
+        ]
+      }
+    ],
+    "render": true
   },
   {
-    "name": "Между раундами",
+    "name": "ROKU LOUNGE",
     "type": "LOUNGE / ОБЩЕНИЕ",
     "description": "Мягкие диваны, приглушённый свет и время для разговора. Продолжение вечера за пределами игры.",
-    "render": true,
     "images": [
       "assets/39.webp"
     ],
     "specs": [
       {
-        "label": "Вместимость",
-        "value": "Скоро объявим"
-      },
-      {
-        "label": "Условия посещения",
-        "value": "Скоро объявим"
+        "label": "Формат",
+        "value": "Лаунж-зона с мягкими диванами"
       }
-    ]
+    ],
+    "priceFrom": "",
+    "tariffs": [],
+    "render": true
   }
 ]

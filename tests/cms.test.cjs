@@ -7,7 +7,7 @@ test('current photos and zones satisfy CMS contracts and every image exists',()=
  const zones=read('zones'),photos=read('photos');assert.ok(cms.zoneData(zones));assert.ok(cms.photoData(photos));
  const paths=[...zones.flatMap(z=>z.images),...photos.hero,...photos.lounge,...photos.food.map(f=>f.image)];
  paths.forEach(path=>assert.ok(fs.existsSync(require('node:path').join(__dirname,'..',path)),path));
- assert.deepEqual(zones.map(z=>z.images.length),[1,1,1,1]);assert.equal(photos.food.length,10);
+ assert.deepEqual(zones.map(z=>z.images.length),[1,1,1,1,1]);assert.equal(photos.food.length,10);
 });
 test('image paths reject script/external URLs and traversal',()=>{
  for(const x of ['javascript:alert(1)','https://bad.test/x.webp','assets/../x.jpg','assets/x.svg','assets/x.webp" onerror="alert(1)'])assert.equal(cms.imagePath(x),'');
@@ -30,3 +30,13 @@ test('CMS fields correspond to actual JSON data',()=>{
 });
 
 test('malformed section data never reaches DOM rendering',()=>{assert.ok(cms.siteData(read('site')));assert.equal(cms.siteData({service:{cards:[null]}}),null);assert.equal(cms.siteData({hero:null}),null)});
+
+test('client price list includes five zones and both PlayStation tariff groups',()=>{
+ const zones=read('zones');assert.equal(zones.length,5);
+ assert.deepEqual(zones.map(z=>z.name),['ROKU COMFORT','ROKU BOOTCAMP','ROKU VIP PC','ROKU VIP PLAYSTATION','ROKU LOUNGE']);
+ assert.equal(zones[0].tariffs[0].rows[4].value,'1 450 ₽');assert.equal(zones[2].tariffs[0].rows[1].value,'4 000 ₽');assert.equal(zones[3].tariffs[1].rows[1].value,'4 450 ₽');assert.equal(zones[4].tariffs.length,0);
+ zones[0].tariffs=[{title:'bad',rows:[null]}];assert.equal(cms.zoneData(zones),null);
+});
+test('Voronezh FAQ has no Moscow address or unsupported GPU models',()=>{
+ const faq=read('faq');assert.ok(cms.faqData(faq));assert.equal(faq.length,6);assert.doesNotMatch(JSON.stringify(faq),/Москв|Новослобод|Менделеев|5090|9800/);assert.equal(cms.faqData([{question:'q',answer:42}]),null);
+});
